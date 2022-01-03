@@ -7,32 +7,61 @@
 [![codecov](https://codecov.io/gh/psichen/napari-hsafm-browser/branch/main/graph/badge.svg)](https://codecov.io/gh/psichen/napari-hsafm-browser)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-hsafm-browser)](https://napari-hub.org/plugins/napari-hsafm-browser)
 
-a napari plugin for viewing high-speed AFM movies
+napari plugin for viewing high-speed AFM movies
 
 ----------------------------------
 
 This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookiecutter-napari-plugin] template.
 
-<!--
-Don't miss the full getting started guide to set up your new package:
-https://github.com/napari/cookiecutter-napari-plugin#getting-started
-
-and review the napari docs for plugin developers:
-https://napari.org/plugins/stable/index.html
--->
-
 ## Installation
 
-You can install `napari-hsafm-browser` via [pip]:
+After download the plugin code and change to the plugin directory `napari-hsafm-browser/`, you can install `napari-hsafm-browser` via the command:
 
-    pip install napari-hsafm-browser
+        pip install -e .
 
+## Usage
 
+This plugin is used for reading and viewing high-speed AFM `.asd` files in vim style.
 
-To install latest development version :
+First, open the directory which contains `.asd` files as the work directory. All `.asd` files in the work directory will be listed.
 
-    pip install git+https://github.com/psichen/napari-hsafm-browser.git
+When one of the `.asd` files is selected, the corresponding movie will show up in the viewer window and the meta data will show up in the side bar.
 
+The movie or frame will be saved in `tiff` format in the directory named by the value of `save to` when the key `y` or `<Shift-z>` are pressed. If no name is provided, the default directory name `imagej-tiff` will be used.
+
+### key map
+
+`j`: move to the next .asd file
+
+`k`: move to the previous .asd file
+
+`l`: step one slice of the movie forward
+
+`h`: step one slice of the movie backward
+
+`w`: step 10% slices of the movie forward
+
+`b`: step 10% slices of the movie backward
+
+`d`: step 25% slices of the movie forward
+
+`u`: step 25% slices of the movie backward
+
+`^`: go to the begining of the movie
+
+`$`: go to the end of the movie
+
+`<Space>`: toggle play
+
+`]`: double the fps (max: 160)
+
+`[`: half the fps (min: 10)
+
+`y`: save the current frame of the movie into a tiff file
+
+`<Shift-z>`: save the current movie into a tiff file
+
+`<Meta-c>`: reset contrast limit according to the current frame
 
 ## Contributing
 
