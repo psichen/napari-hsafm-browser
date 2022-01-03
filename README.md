@@ -61,7 +61,7 @@ The movie or frame will be saved in `tiff` format in the directory named by the 
 
 `<Shift-z>`: save the current movie into a tiff file
 
-`<Meta-c>`: reset contrast limit according to the current frame
+`<Alt-c>`: reset contrast limit according to the current frame
 
 ## Contributing
 

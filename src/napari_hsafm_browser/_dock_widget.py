@@ -90,16 +90,16 @@ class hsAFMBrowser(QWidget):
                 f"pixels: \t\t {self.hsafm.xPixel} x {self.hsafm.yPixel}"
             )
             meta_list["record_date"].setText(
-                f"record_date: \t {datetime.date(self.hsafm.yearRec, self.hsafm.monthRec, self.hsafm.dayRec)}"
+                f"record date: \t {datetime.date(self.hsafm.yearRec, self.hsafm.monthRec, self.hsafm.dayRec)}"
             )
             meta_list["record_time"].setText(
-                f"record_time: \t {datetime.time(self.hsafm.hourRec, self.hsafm.minuteRec, self.hsafm.secondRec)}"
+                f"record time: \t {datetime.time(self.hsafm.hourRec, self.hsafm.minuteRec, self.hsafm.secondRec)}"
             )
             meta_list["record_duration"].setText(
-                f"record_duration: \t {datetime.timedelta(milliseconds=self.hsafm.frameAcqTime*self.hsafm.frameNumber[-1])}"
+                f"record duration: \t {datetime.timedelta(milliseconds=self.hsafm.frameAcqTime*self.hsafm.frameNumber[-1])}"
             )
             meta_list["frame_time"].setText(
-                f"frame_time (s): \t {self.hsafm.frameAcqTime/1000}"
+                f"frame time (s): \t {self.hsafm.frameAcqTime/1000}"
             )
             meta_list["AFM_machine"].setText(f"AFM_machine: \t {self.hsafm.machineNum}")
             meta_list["comment"].setText(f"comment: \t\t {self.hsafm.comment}")
@@ -159,8 +159,8 @@ class hsAFMBrowser(QWidget):
         def slow_down(viewer):
             _fps = SETTINGS.application.playback_fps
             _fps /= 2
-            if _fps < 10:
-                SETTINGS.application.playback_fps = 10
+            if _fps < 5:
+                SETTINGS.application.playback_fps = 5
             else:
                 SETTINGS.application.playback_fps = _fps
 
@@ -170,7 +170,7 @@ class hsAFMBrowser(QWidget):
                 0
             ]
             _max = viewer.window.qt_viewer.dims.slider_widgets[0].dims.nsteps[0]
-            _step = int(_max / 10)
+            _step = int(_max / 10) if int(_max / 10) else 1
             _forward = _current + _step
             _forward = _forward if _forward <= _max else _max
             viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
@@ -183,7 +183,7 @@ class hsAFMBrowser(QWidget):
                 0
             ]
             _max = viewer.window.qt_viewer.dims.slider_widgets[0].dims.nsteps[0]
-            _step = int(_max / 10)
+            _step = int(_max / 10) if int(_max / 10) else 1
             _backward = _current - _step
             _backward = _backward if _backward >= 0 else 0
             viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
@@ -196,7 +196,7 @@ class hsAFMBrowser(QWidget):
                 0
             ]
             _max = viewer.window.qt_viewer.dims.slider_widgets[0].dims.nsteps[0]
-            _step = int(_max / 4)
+            _step = int(_max / 4) if int(_max / 4) else 1
             _forward = _current + _step
             _forward = _forward if _forward <= _max else _max
             viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
@@ -209,7 +209,7 @@ class hsAFMBrowser(QWidget):
                 0
             ]
             _max = viewer.window.qt_viewer.dims.slider_widgets[0].dims.nsteps[0]
-            _step = int(_max / 4)
+            _step = int(_max / 4) if int(_max / 4) else 1
             _backward = _current - _step
             _backward = _backward if _backward >= 0 else 0
             viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
@@ -227,7 +227,7 @@ class hsAFMBrowser(QWidget):
                 0, _max
             )
 
-        @self.viewer.bind_key("Meta-c")
+        @self.viewer.bind_key("Alt-c")
         def reset_contrast(viewer):
             viewer.layers[0].reset_contrast_limits()
 
