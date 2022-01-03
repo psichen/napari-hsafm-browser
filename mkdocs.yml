@@ -1,0 +1,11 @@
+site_name: napari-hsafm-browser
+site_description: a napari plugin for viewing high-speed AFM movies
+site_author: Sichen Pan
+
+theme: readthedocs
+
+
+repo_url: https://github.com/psichen/napari-hsafm-browser
+
+pages:
+- Home: index.md
