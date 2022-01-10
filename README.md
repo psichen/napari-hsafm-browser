@@ -43,9 +43,9 @@ The movie or frame will be saved in `tiff` format in the directory named by the 
 
 `b`: step 10% slices of the movie backward
 
-`d`: step 25% slices of the movie forward
+`d`: move to the next 25% .asd file
 
-`u`: step 25% slices of the movie backward
+`u`: move to the previous 25% .asd file
 
 `^`: go to the begining of the movie
 
@@ -59,7 +59,7 @@ The movie or frame will be saved in `tiff` format in the directory named by the 
 
 `y`: save the current frame of the movie into a tiff file
 
-`<Shift-z>`: save the current movie into a tiff file
+`<Shift-z>`: copy the current .asd file to `save_dir`
 
 `<Alt-c>`: reset contrast limit according to the current frame
 

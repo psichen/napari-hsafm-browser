@@ -33,7 +33,6 @@ class hsAFMBrowser(QWidget):
             "record_time": QLabel(),
             "record_duration": QLabel(),
             "frame_time": QLabel(),
-            "AFM_machine": QLabel(),
             "comment": QLabel(),
         }
 
@@ -102,7 +101,6 @@ class hsAFMBrowser(QWidget):
             meta_list["frame_time"].setText(
                 f"frame time (s): \t {self.hsafm.frameAcqTime/1000}"
             )
-            meta_list["AFM_machine"].setText(f"AFM_machine: \t {self.hsafm.machineNum}")
             meta_list["comment"].setText(f"comment: \t\t {self.hsafm.comment}")
 
         @self.viewer.bind_key("Space")
