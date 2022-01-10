@@ -170,7 +170,7 @@ class hsAFMBrowser(QWidget):
             SETTINGS.application.playback_fps = 10
 
         @self.viewer.bind_key("w")
-        def forward_small_step(viewer):
+        def forward_steps(viewer):
             _current = viewer.window.qt_viewer.dims.slider_widgets[0].dims.current_step[
                 0
             ]
@@ -183,7 +183,7 @@ class hsAFMBrowser(QWidget):
             )
 
         @self.viewer.bind_key("b")
-        def backward_small_step(viewer):
+        def backward_steps(viewer):
             _current = viewer.window.qt_viewer.dims.slider_widgets[0].dims.current_step[
                 0
             ]
@@ -196,30 +196,38 @@ class hsAFMBrowser(QWidget):
             )
 
         @self.viewer.bind_key("d")
-        def forward_big_step(viewer):
-            _current = viewer.window.qt_viewer.dims.slider_widgets[0].dims.current_step[
-                0
-            ]
-            _max = viewer.window.qt_viewer.dims.slider_widgets[0].dims.nsteps[0]
-            _step = int(_max / 4) if int(_max / 4) else 1
-            _forward = _current + _step
-            _forward = _forward if _forward <= _max else _max
-            viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
-                0, _forward
-            )
+        def next_couple_files(viewer):
+            if file_list.currentRow() < file_list.count() - 1:
+                _step = int(file_list.count() / 4) if int(file_list.count() / 4) else 1
+                file_list.setCurrentRow(file_list.currentRow() + _step) if file_list.currentRow() + _step < file_list.count()-1 else file_list.setCurrentRow(file_list.count()-1)
+        # def forward_big_step(viewer):
+            # _current = viewer.window.qt_viewer.dims.slider_widgets[0].dims.current_step[
+                # 0
+            # ]
+            # _max = viewer.window.qt_viewer.dims.slider_widgets[0].dims.nsteps[0]
+            # _step = int(_max / 4) if int(_max / 4) else 1
+            # _forward = _current + _step
+            # _forward = _forward if _forward <= _max else _max
+            # viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
+                # 0, _forward
+            # )
 
         @self.viewer.bind_key("u")
-        def backward_big_step(viewer):
-            _current = viewer.window.qt_viewer.dims.slider_widgets[0].dims.current_step[
-                0
-            ]
-            _max = viewer.window.qt_viewer.dims.slider_widgets[0].dims.nsteps[0]
-            _step = int(_max / 4) if int(_max / 4) else 1
-            _backward = _current - _step
-            _backward = _backward if _backward >= 0 else 0
-            viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
-                0, _backward
-            )
+        def prev_couple_files(viewer):
+            if file_list.currentRow() > 0:
+                _step = int(file_list.count() / 4) if int(file_list.count() / 4) else 1
+                file_list.setCurrentRow(file_list.currentRow() - _step) if file_list.currentRow() - _step > 0 else file_list.setCurrentRow(0)
+        # def backward_big_step(viewer):
+            # _current = viewer.window.qt_viewer.dims.slider_widgets[0].dims.current_step[
+                # 0
+            # ]
+            # _max = viewer.window.qt_viewer.dims.slider_widgets[0].dims.nsteps[0]
+            # _step = int(_max / 4) if int(_max / 4) else 1
+            # _backward = _current - _step
+            # _backward = _backward if _backward >= 0 else 0
+            # viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
+                # 0, _backward
+            # )
 
         @self.viewer.bind_key("^")
         def go_first(viewer):
