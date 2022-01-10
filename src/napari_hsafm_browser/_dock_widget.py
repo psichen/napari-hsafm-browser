@@ -1,6 +1,7 @@
 import datetime
 import re
 from os import listdir, makedirs, path
+import shutil
 
 import tifffile
 from magicgui.widgets import FileEdit
@@ -164,6 +165,10 @@ class hsAFMBrowser(QWidget):
             else:
                 SETTINGS.application.playback_fps = _fps
 
+        @self.viewer.bind_key("=")
+        def reset_speed(viewer):
+            SETTINGS.application.playback_fps = 10
+
         @self.viewer.bind_key("w")
         def forward_small_step(viewer):
             _current = viewer.window.qt_viewer.dims.slider_widgets[0].dims.current_step[
@@ -232,11 +237,30 @@ class hsAFMBrowser(QWidget):
             viewer.layers[0].reset_contrast_limits()
 
         @self.viewer.bind_key("Shift-z")
-        def save_as_tiff(viewer):
+        # def save_as_tiff(viewer):
+            # if save_to.text():
+                # save_dir = path.join(self.current_dir, save_to.text())
+            # else:
+                # save_dir = path.join(self.current_dir, "imagej_tiff")
+
+            # save_name = re.search(
+                # r"(.*).asd$", file_list.currentItem().file_name
+            # ).groups()[0]
+
+            # if not path.exists(save_dir):
+                # makedirs(save_dir)
+
+            # tifffile.imwrite(
+                # f"{save_dir}/{save_name}.tiff",
+                # viewer.layers["height (nm)"].data,
+                # imagej=True,
+            # )
+
+        def save_as_asd(viewer):
             if save_to.text():
                 save_dir = path.join(self.current_dir, save_to.text())
             else:
-                save_dir = path.join(self.current_dir, "imagej_tiff")
+                save_dir = path.join(self.current_dir, "copied asd files")
 
             save_name = re.search(
                 r"(.*).asd$", file_list.currentItem().file_name
@@ -245,11 +269,7 @@ class hsAFMBrowser(QWidget):
             if not path.exists(save_dir):
                 makedirs(save_dir)
 
-            tifffile.imwrite(
-                f"{save_dir}/{save_name}.tiff",
-                viewer.layers["height (nm)"].data,
-                imagej=True,
-            )
+            shutil.copy(path.join(self.current_dir, file_list.currentItem().file_name), save_dir)
 
         @self.viewer.bind_key("y")
         def save_slice_as_tiff(viewer):
