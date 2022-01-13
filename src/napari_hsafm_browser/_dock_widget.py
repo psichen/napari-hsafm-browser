@@ -63,7 +63,8 @@ class hsAFMBrowser(QWidget):
 
         def file_open():
             file = file_list.currentItem()
-            self.hsafm = HSAFM(path.join(self.current_dir, file.file_name))
+            if file:
+                self.hsafm = HSAFM(path.join(self.current_dir, file.file_name))
 
             if self.viewer.window.qt_viewer.dims.is_playing:
                 self.viewer.window.qt_viewer.dims.stop()
@@ -198,34 +199,12 @@ class hsAFMBrowser(QWidget):
             if file_list.currentRow() < file_list.count() - 1:
                 _step = int(file_list.count() / 4) if int(file_list.count() / 4) else 1
                 file_list.setCurrentRow(file_list.currentRow() + _step) if file_list.currentRow() + _step < file_list.count()-1 else file_list.setCurrentRow(file_list.count()-1)
-        # def forward_big_step(viewer):
-            # _current = viewer.window.qt_viewer.dims.slider_widgets[0].dims.current_step[
-                # 0
-            # ]
-            # _max = viewer.window.qt_viewer.dims.slider_widgets[0].dims.nsteps[0]
-            # _step = int(_max / 4) if int(_max / 4) else 1
-            # _forward = _current + _step
-            # _forward = _forward if _forward <= _max else _max
-            # viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
-                # 0, _forward
-            # )
 
         @self.viewer.bind_key("u")
         def prev_couple_files(viewer):
             if file_list.currentRow() > 0:
                 _step = int(file_list.count() / 4) if int(file_list.count() / 4) else 1
                 file_list.setCurrentRow(file_list.currentRow() - _step) if file_list.currentRow() - _step > 0 else file_list.setCurrentRow(0)
-        # def backward_big_step(viewer):
-            # _current = viewer.window.qt_viewer.dims.slider_widgets[0].dims.current_step[
-                # 0
-            # ]
-            # _max = viewer.window.qt_viewer.dims.slider_widgets[0].dims.nsteps[0]
-            # _step = int(_max / 4) if int(_max / 4) else 1
-            # _backward = _current - _step
-            # _backward = _backward if _backward >= 0 else 0
-            # viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
-                # 0, _backward
-            # )
 
         @self.viewer.bind_key("^")
         def go_first(viewer):
@@ -243,26 +222,7 @@ class hsAFMBrowser(QWidget):
             viewer.layers[0].reset_contrast_limits()
 
         @self.viewer.bind_key("Shift-z")
-        # def save_as_tiff(viewer):
-            # if save_to.text():
-                # save_dir = path.join(self.current_dir, save_to.text())
-            # else:
-                # save_dir = path.join(self.current_dir, "imagej_tiff")
-
-            # save_name = re.search(
-                # r"(.*).asd$", file_list.currentItem().file_name
-            # ).groups()[0]
-
-            # if not path.exists(save_dir):
-                # makedirs(save_dir)
-
-            # tifffile.imwrite(
-                # f"{save_dir}/{save_name}.tiff",
-                # viewer.layers["height (nm)"].data,
-                # imagej=True,
-            # )
-
-        def save_as_asd(viewer):
+        def save_as_tiff(viewer):
             if save_to.text():
                 save_dir = path.join(self.current_dir, save_to.text())
             else:
@@ -276,6 +236,13 @@ class hsAFMBrowser(QWidget):
                 makedirs(save_dir)
 
             shutil.copy(path.join(self.current_dir, file_list.currentItem().file_name), save_dir)
+            tifffile.imwrite(
+                f"{save_dir}/{save_name}.tiff",
+                viewer.layers["height (nm)"].data,
+                imagej=True,
+                resolution=(self.hsafm.xPixel/self.hsafm.xScanRange, self.hsafm.yPixel/self.hsafm.yScanRange),
+                metadata={'axes':'TYX', 'unit':'nm', 'finterval':self.hsafm.frameAcqTime/1000},
+            )
 
         @self.viewer.bind_key("y")
         def save_slice_as_tiff(viewer):
