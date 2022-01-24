@@ -94,3 +94,10 @@ If you encounter any problems, please [file an issue] along with a detailed desc
 [tox]: https://tox.readthedocs.io/en/latest/
 [pip]: https://pypi.org/project/pip/
 [PyPI]: https://pypi.org/
+
+## To do ##
+
+1. fix height data in wide scanning.
+2. continuous autoscale of contrast
+3. continuous `h` and `l` keybinding functions.
+
