@@ -51,6 +51,8 @@ The movie or frame will be saved in `tiff` format in the directory named by the 
 
 `$`: go to the end of the movie
 
+`x`: delete the current slice
+
 `<Space>`: toggle play
 
 `]`: double the fps (max: 160)
@@ -97,7 +99,5 @@ If you encounter any problems, please [file an issue] along with a detailed desc
 
 ## To do ##
 
-1. fix height data in wide scanning.
-2. continuous autoscale of contrast
-3. continuous `h` and `l` keybinding functions.
-
+1. continuous autoscale of contrast
+2. continuous `h` and `l` keybinding functions.

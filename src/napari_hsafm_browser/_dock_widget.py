@@ -2,6 +2,7 @@ import datetime
 import re
 from os import listdir, makedirs, path
 import shutil
+import numpy as np
 
 import tifffile
 from magicgui.widgets import FileEdit
@@ -266,6 +267,11 @@ class hsAFMBrowser(QWidget):
                 viewer.layers["height (nm)"].data[current_slice],
                 imagej=True,
             )
+
+        @self.viewer.bind_key("x")
+        def del_slice(viewer):
+            current_slice = viewer.window.qt_viewer.dims.slider_widgets[0].dims.current_step[0]
+            viewer.layers["height (nm)"].data = np.delete(viewer.layers["height (nm)"].data, current_slice, 0)
 
         dir_edit.line_edit.changed.connect(dir_changed)
         file_list.currentItemChanged.connect(file_open)

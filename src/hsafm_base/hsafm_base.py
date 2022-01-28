@@ -43,15 +43,15 @@ class HSAFM:
 
             # ADRange
             self.ADRange = np.fromfile(f, "i", 1)[0]
-            if self.ADRange == 2 ** 18:
+            if self.ADRange == 2 ** 18 or self.ADRange == 3:
                 self.ADRange = 10
-            elif self.ADRange == 2 ** 17:
+            elif self.ADRange == 2 ** 17 or self.ADRange == 2:
                 self.ADRange = 5
-            elif self.ADRange == 2 * 16:
+            elif self.ADRange == 2 * 16 or self.ADRange == 1:
                 self.ADRange = 2
             else:
-                print("\n\n==========")
-                print(f"ADRange: {self.ADRange}")
+                print("!!!CAUTION!!!/n")
+                print(f"{self.fullName}: ADRange: {self.ADRange}")
             self.ADResolution = np.fromfile(f, "i", 1)[0]
 
             self.xMaxScanRange = np.fromfile(f, "f", 1)[0]  # nm
