@@ -233,12 +233,12 @@ class hsAFMBrowser(QWidget):
                 r"(.*).asd$", file_list.currentItem().file_name
             ).groups()[0]
 
-            if not path.exists(save_dir):
-                makedirs(save_dir)
+            if not path.exists(path.join(save_dir, save_name)):
+                makedirs(path.join(save_dir, save_name))
 
             shutil.copy(path.join(self.current_dir, file_list.currentItem().file_name), save_dir)
             tifffile.imwrite(
-                f"{save_dir}/{save_name}.tiff",
+                f"{save_dir}/{save_name}/{save_name}.tiff",
                 viewer.layers["height (nm)"].data,
                 imagej=True,
                 resolution=(self.hsafm.xPixel/self.hsafm.xScanRange, self.hsafm.yPixel/self.hsafm.yScanRange),
@@ -259,8 +259,8 @@ class hsAFMBrowser(QWidget):
                 r"(.*).asd$", file_list.currentItem().file_name
             ).groups()[0]
 
-            if not path.exists(save_dir):
-                makedirs(save_dir)
+            if not path.exists(path.join(save_dir, save_name)):
+                makedirs(path.join(save_dir, save_name))
 
             tifffile.imwrite(
                 f"{save_dir}/{save_name}-{current_slice}.tiff",
