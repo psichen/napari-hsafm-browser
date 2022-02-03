@@ -82,7 +82,10 @@ class hsAFMBrowser(QWidget):
             self.viewer.window.qt_viewer.dims.slider_widgets[0].dims.set_current_step(
                 0, 0
             )
-            self.viewer.layers[0].reset_contrast_limits()
+            # self.viewer.layers[0].reset_contrast_limits()
+            # QPushButton::children()
+            # QPushButton::setChecked()
+            self.viewer.window.qt_viewer.controls.children()[-1].autoScaleBar.children()[2].setChecked(1)
             SETTINGS.application.playback_fps = 10
 
             meta_list["scan_range"].setText(
