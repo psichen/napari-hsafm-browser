@@ -101,4 +101,4 @@ If you encounter any problems, please [file an issue] along with a detailed desc
 
 1. continuous `h` and `l` keybinding functions.
 2. visual selection & sliderbar
-3. press & release spacebar toggle play
+3. ignore `.filename` generated in MacOS
