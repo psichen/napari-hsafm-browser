@@ -55,7 +55,7 @@ class hsAFMBrowser(QWidget):
             )
             file_list.clear()
             for f in listdir(self.current_dir):
-                if f.endswith(".asd"):
+                if f.endswith(".asd") and not f.startswith("._"):
                     item = QListWidgetItem(f)
                     item.file_name = f
                     file_list.addItem(item)
@@ -245,7 +245,7 @@ class hsAFMBrowser(QWidget):
                 viewer.layers["height (nm)"].data,
                 imagej=True,
                 resolution=(self.hsafm.xPixel/self.hsafm.xScanRange, self.hsafm.yPixel/self.hsafm.yScanRange),
-                metadata={'axes':'TYX', 'unit':'nm', 'finterval':self.hsafm.frameAcqTime/1000},
+                metadata={'axes':'ZYX', 'unit':'nm', 'finterval':self.hsafm.frameAcqTime/1000},
             )
 
         @self.viewer.bind_key("y")
