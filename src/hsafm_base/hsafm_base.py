@@ -15,6 +15,12 @@ class HSAFM:
             self.encNumber = np.fromfile(f, "i", 1)[0]
             self.operationNameSize = np.fromfile(f, "i", 1)[0]
             self.commentSize = np.fromfile(f, "i", 1)[0]
+
+            # 2023-04-17 debug for commentSize
+            #----------------------------------------
+            self.commentSize -= 2
+            #========================================
+
             self.dataTypeCh1 = np.fromfile(f, "i", 1)[0]
             self.dataTypeCh2 = np.fromfile(f, "i", 1)[0]
             self.numberFramesRecorded = np.fromfile(f, "i", 1)[0]
@@ -108,6 +114,14 @@ class HSAFM:
             self.height -= np.repeat(
                 np.min(self.height, (1, 2)), self.yPixel * self.xPixel
             ).reshape((self.numberFramesCurrent, self.yPixel, self.xPixel))
+
+            # 2023-05-08: for HS-France
+            #----------------------------------------
+            height_ = np.zeros((self.height.shape[0], self.height.shape[1]-1, self.height.shape[2]-1), dtype='float32')
+            for i, img in enumerate(self.height):
+                height_[i] = img[:-1,1:]
+            self.height = height_
+            #========================================
 
         self.afm_lut = Colormap(
             # RGB
